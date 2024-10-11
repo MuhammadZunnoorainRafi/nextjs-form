@@ -17,13 +17,19 @@ enum JobTitle {
   Teacher,
 }
 
+enum Experience {
+  '1 Year',
+  '2 Years',
+  '3 Years',
+}
+
 type FormValuesType = {
   name: string;
   email: string;
   age: number;
   jobTitle: JobTitle;
   gender: Gender;
-  experience: string;
+  experience: Experience;
   presentAddress: string;
   permanentAddress: string;
 };

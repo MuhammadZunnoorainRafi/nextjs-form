@@ -14,9 +14,7 @@ export const BasicPersonalInfoSchema = z.object({
 });
 
 export const BasicJobInfoSchema = z.object({
-  jobTitle: z.enum(['Engineer', 'Doctor', 'Teacher'], {
-    errorMap: () => ({ message: 'Select a valid job title' }),
-  }),
+  jobTitle: z.string().min(1, 'Enter job title'),
   gender: z.enum(['Male', 'Female'], {
     errorMap: () => ({ message: 'Select a valid gender' }),
   }),

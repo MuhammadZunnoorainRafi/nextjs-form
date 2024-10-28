@@ -3,6 +3,7 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useContext,
   useState,
 } from 'react';
 
@@ -60,4 +61,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </AppContext.Provider>
   );
+};
+
+export const useAppContext = () => {
+  const context = useContext(AppContext);
+  if (context === null) {
+    throw new Error('context must be used within the context provider');
+  }
+  return context as AppContextType;
 };

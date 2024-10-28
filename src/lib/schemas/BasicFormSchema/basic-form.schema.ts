@@ -6,7 +6,11 @@ export const BasicPersonalInfoSchema = z.object({
     .string()
     .min(1, 'Enter email')
     .email({ message: 'Enter a valid email address' }),
-  age: z.coerce.number().min(1, 'You must be above 22'),
+  age: z
+    .number({
+      invalid_type_error: 'Enter your age',
+    })
+    .min(23, 'You must be above 22'),
 });
 
 export const BasicJobInfoSchema = z.object({

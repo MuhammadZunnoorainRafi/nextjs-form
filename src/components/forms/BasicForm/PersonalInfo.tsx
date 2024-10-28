@@ -5,8 +5,12 @@ import ErrorMessage from '@/components/shared/ErrorMessage';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BasicPersonalInfoSchema } from '@/lib/schemas/BasicFormSchema/basic-form.schema';
 import { useForm } from 'react-hook-form';
+import FormFooter from '@/components/shared/FormFooter';
+import { useAppContext } from '@/context/AppContext';
 
 function PersonalInfo() {
+  const { setCurrentStep, updateFormValues } = useAppContext();
+
   const {
     register,
     handleSubmit,
@@ -16,10 +20,11 @@ function PersonalInfo() {
   });
 
   const formSubmit = (formdata: BasicPersonalInfoType) => {
-    console.log(formdata);
+    updateFormValues(formdata);
+    setCurrentStep((prev) => prev + 1);
   };
   return (
-    <div className="min-h-screen flex flex-col gap-3 items-center justify-center">
+    <div className="flex flex-col gap-3 items-center justify-center">
       <h1>Personal Info</h1>
       <form
         onSubmit={handleSubmit(formSubmit)}
@@ -56,12 +61,12 @@ function PersonalInfo() {
           <input
             type="number"
             id="age"
-            {...register('age')}
+            {...register('age', { valueAsNumber: true })}
             className="mt-1 p-2 rounded-md outline-none text-black focus:ring-1 focus:ring-blue-700 border-2 border-gray-700 w-full focus:border-blue-700 "
           />
           <ErrorMessage message={errors.age?.message} />
         </div>
-        <button className="inline-block ml-auto">Next</button>
+        <FormFooter />
       </form>
     </div>
   );

@@ -9,7 +9,7 @@ import FormFooter from '@/components/shared/FormFooter';
 import { useAppContext } from '@/context/AppContext';
 
 function PersonalInfo() {
-  const { setCurrentStep, updateFormValues } = useAppContext();
+  const { setCurrentStep, updateFormValues, formValues } = useAppContext();
 
   const {
     register,
@@ -17,6 +17,11 @@ function PersonalInfo() {
     formState: { errors },
   } = useForm<BasicPersonalInfoType>({
     resolver: zodResolver(BasicPersonalInfoSchema),
+    defaultValues: {
+      name: formValues.name,
+      age: formValues.age,
+      email: formValues.email,
+    },
   });
 
   const formSubmit = (formdata: BasicPersonalInfoType) => {

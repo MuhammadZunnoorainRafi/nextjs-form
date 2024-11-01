@@ -20,7 +20,6 @@ function FormFooter() {
       </button>
       <button
         type="submit"
-        disabled={currentStep === 3}
         className={`${
           currentStep === 3
             ? 'bg-blue-500 text-white'

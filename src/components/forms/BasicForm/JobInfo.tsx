@@ -8,7 +8,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 function JobInfo() {
-  const { setCurrentStep, updateFormValues } = useAppContext();
+  const { setCurrentStep, updateFormValues, formValues } = useAppContext();
 
   const {
     register,
@@ -16,6 +16,11 @@ function JobInfo() {
     formState: { errors },
   } = useForm<BasicJobInfoType>({
     resolver: zodResolver(BasicJobInfoSchema),
+    defaultValues: {
+      gender: formValues.gender,
+      jobTitle: formValues.jobTitle,
+      experience: formValues.experience,
+    },
   });
 
   const formSubmit = (formdata: BasicJobInfoType) => {

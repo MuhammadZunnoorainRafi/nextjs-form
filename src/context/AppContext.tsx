@@ -1,3 +1,4 @@
+import { FormValuesType } from '@/lib/types/BasicFormType/basic-form.type';
 import {
   createContext,
   Dispatch,
@@ -8,7 +9,7 @@ import {
 } from 'react';
 
 type AppContextType = {
-  formValues: {};
+  formValues: FormValuesType;
   updateFormValues: (object: any) => void;
   currentStep: number;
   setCurrentStep: Dispatch<SetStateAction<number>>;
@@ -20,7 +21,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formValues, setFormValues] = useState({});
 
-  const updateFormValues = (object) => {
+  const updateFormValues = (object: any) => {
     setFormValues((prev) => ({ ...prev, ...object }));
   };
 

@@ -4,11 +4,12 @@ import { useAppContext } from '@/context/AppContext';
 import { BasicJobInfoSchema } from '@/lib/schemas/BasicFormSchema/basic-form.schema';
 import { BasicJobInfoType } from '@/lib/types/BasicFormType/basic-form.type';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 
 function JobInfo() {
-  const { setCurrentStep, updateFormValues, formValues } = useAppContext();
+  const { setCurrentStep, updateFormValues, formValues, currentStep } =
+    useAppContext();
 
   const {
     register,
@@ -29,7 +30,12 @@ function JobInfo() {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center justify-center">
+    <motion.div
+      initial={{ x: currentStep === 2 ? '50%' : '-50%', opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
+      className="flex flex-col gap-3 items-center justify-center"
+    >
       <h1>Personal Info</h1>
       <form
         onSubmit={handleSubmit(formSubmit)}
@@ -91,7 +97,7 @@ function JobInfo() {
         </div>
         <FormFooter />
       </form>
-    </div>
+    </motion.div>
   );
 }
 

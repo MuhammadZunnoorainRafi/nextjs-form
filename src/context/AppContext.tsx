@@ -1,3 +1,4 @@
+'use client';
 import { FormValuesType } from '@/lib/types/BasicFormType/basic-form.type';
 import {
   createContext,
@@ -5,12 +6,14 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 
 type AppContextType = {
   formValues: FormValuesType;
   updateFormValues: (object: any) => void;
+  setFormValues: (object: any) => void;
   currentStep: number;
   setCurrentStep: Dispatch<SetStateAction<number>>;
 };
@@ -19,15 +22,27 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState<FormValuesType>(
+    JSON.parse(localStorage.getItem('form-values') as any) || {}
+  );
 
-  const updateFormValues = (object: any) => {
-    setFormValues((prev) => ({ ...prev, ...object }));
+  const updateFormValues = (object: FormValuesType) => {
+    setFormValues((prev: FormValuesType) => ({ ...prev, ...object }));
   };
+
+  useEffect(() => {
+    localStorage.setItem('form-values', JSON.stringify(formValues));
+  }, [formValues]);
 
   return (
     <AppContext.Provider
-      value={{ formValues, updateFormValues, currentStep, setCurrentStep }}
+      value={{
+        formValues,
+        updateFormValues,
+        currentStep,
+        setCurrentStep,
+        setFormValues,
+      }}
     >
       {children}
     </AppContext.Provider>

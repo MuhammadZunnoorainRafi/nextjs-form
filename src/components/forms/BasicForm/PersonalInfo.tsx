@@ -7,6 +7,7 @@ import { BasicPersonalInfoSchema } from '@/lib/schemas/BasicFormSchema/basic-for
 import { useForm } from 'react-hook-form';
 import FormFooter from '@/components/shared/FormFooter';
 import { useAppContext } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 
 function PersonalInfo() {
   const { setCurrentStep, updateFormValues, formValues } = useAppContext();
@@ -29,7 +30,12 @@ function PersonalInfo() {
     setCurrentStep((prev) => prev + 1);
   };
   return (
-    <div className="flex flex-col gap-3 items-center justify-center">
+    <motion.div
+      initial={{ x: '-50%', opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
+      className="flex flex-col gap-3 items-center justify-center"
+    >
       <h1>Personal Info</h1>
       <form
         onSubmit={handleSubmit(formSubmit)}
@@ -73,7 +79,7 @@ function PersonalInfo() {
         </div>
         <FormFooter />
       </form>
-    </div>
+    </motion.div>
   );
 }
 

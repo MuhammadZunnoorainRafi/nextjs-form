@@ -1,3 +1,4 @@
+'use client';
 import ErrorMessage from '@/components/shared/ErrorMessage';
 import FormFooter from '@/components/shared/FormFooter';
 import { useAppContext } from '@/context/AppContext';
@@ -6,9 +7,11 @@ import { BasicAddressInfoType } from '@/lib/types/BasicFormType/basic-form.type'
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
 
 function AddressInfo() {
-  const { setCurrentStep, updateFormValues, formValues } = useAppContext();
+  const { setCurrentStep, updateFormValues, formValues, currentStep } =
+    useAppContext();
   const {
     register,
     handleSubmit,
@@ -27,7 +30,12 @@ function AddressInfo() {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center justify-center">
+    <motion.div
+      initial={{ x: currentStep === 3 ? '50%' : '-50%', opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
+      className="flex flex-col gap-3 items-center justify-center"
+    >
       <h1>Personal Info</h1>
       <form
         onSubmit={handleSubmit(formSubmit)}
@@ -59,7 +67,7 @@ function AddressInfo() {
         </div>
         <FormFooter />
       </form>
-    </div>
+    </motion.div>
   );
 }
 

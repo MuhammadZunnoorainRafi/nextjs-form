@@ -11,6 +11,9 @@ function Navbar() {
         <Link className="hover:underline" href="/basic">
           Basic
         </Link>
+        <Link className="hover:underline" href="/dynamic-form">
+          Dynamic-Form
+        </Link>
       </div>
     </div>
   );

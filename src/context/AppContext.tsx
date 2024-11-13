@@ -23,7 +23,9 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formValues, setFormValues] = useState<FormValuesType>(
-    JSON.parse(localStorage.getItem('form-values') as any) || {}
+    typeof window !== 'undefined'
+      ? JSON.parse(localStorage.getItem('form-values') as any)
+      : {}
   );
 
   const updateFormValues = (object: FormValuesType) => {

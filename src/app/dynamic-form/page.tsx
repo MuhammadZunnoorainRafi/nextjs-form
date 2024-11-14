@@ -1,13 +1,13 @@
+import DynamicForm from '@/components/forms/DynamicForm/DynamicForm';
 import Container from '@/components/shared/Container';
-import { TextField } from '@mui/material';
 import React from 'react';
 
-function DynamicForm() {
+function DynamicFormPage() {
   return (
     <Container>
-      <TextField label="Full Name" />
+      <DynamicForm />
     </Container>
   );
 }
 
-export default DynamicForm;
+export default DynamicFormPage;

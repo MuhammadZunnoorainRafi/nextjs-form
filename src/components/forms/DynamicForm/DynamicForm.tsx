@@ -2,6 +2,7 @@
 import {
   DynamicFormSchema,
   DynamicFormType,
+  formDefaultValues,
 } from '@/lib/schemas/DynamicFormSchema/dynamic-form.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddCircleRounded, DeleteForeverRounded } from '@mui/icons-material';
@@ -10,11 +11,19 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormLabel,
   IconButton,
+  Radio,
+  RadioGroup,
   TextField,
 } from '@mui/material';
 import React, { useEffect } from 'react';
-import { FieldErrors, useFieldArray, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FieldErrors,
+  useFieldArray,
+  useForm,
+} from 'react-hook-form';
 
 function DynamicForm() {
   const {
@@ -23,7 +32,10 @@ function DynamicForm() {
     watch,
     control,
     formState: { errors },
-  } = useForm<DynamicFormType>({ resolver: zodResolver(DynamicFormSchema) });
+  } = useForm<DynamicFormType>({
+    resolver: zodResolver(DynamicFormSchema),
+    defaultValues: formDefaultValues,
+  });
 
   const { fields, remove, replace, append } = useFieldArray({
     control,
@@ -32,6 +44,7 @@ function DynamicForm() {
 
   const hasWorkExperience = watch('hasWorkExperience');
   const knowsOtherLanguages = watch('knowsOtherLanguages');
+  const educationLevel = watch('educationLevel');
 
   useEffect(() => {
     if (knowsOtherLanguages) {
@@ -40,9 +53,15 @@ function DynamicForm() {
   }, [knowsOtherLanguages, replace]);
 
   const fullErrors: FieldErrors<
-    Extract<DynamicFormType, { hasWorkExperience: true }> &
-      Extract<DynamicFormType, { knowsOtherLanguages: true }>
-  > = errors;
+    Extract<DynamicFormType, { hasWorkExperience: true }>
+  > &
+    FieldErrors<Extract<DynamicFormType, { knowsOtherLanguages: true }>> &
+    FieldErrors<
+      Extract<DynamicFormType, { educationLevel: 'bachelorsDegree' }>
+    > &
+    FieldErrors<
+      Extract<DynamicFormType, { educationLevel: 'higherSchoolDiploma' }>
+    > = errors;
 
   const formSubmit = (formData: DynamicFormType) => {
     alert(JSON.stringify(formData, null, 2));
@@ -51,7 +70,7 @@ function DynamicForm() {
   return (
     <div>
       <form onSubmit={handleSubmit(formSubmit)}>
-        <FormControl sx={{ gap: 2, width: '100%' }}>
+        <FormControl sx={{ gap: 2, width: '100%', height: '100%' }}>
           <TextField
             {...register('name')}
             label="Name"
@@ -107,6 +126,48 @@ function DynamicForm() {
                 <AddCircleRounded />
               </IconButton>
             </>
+          )}
+          <FormControl>
+            <FormLabel>Education Level</FormLabel>
+            <Controller
+              control={control}
+              name="educationLevel"
+              render={({ field }) => (
+                <RadioGroup {...field}>
+                  <FormControlLabel
+                    label="No Formal Education"
+                    value="noFormalEducation"
+                    control={<Radio />}
+                  />
+                  <FormControlLabel
+                    label="Higher School Diploma"
+                    value="higherSchoolDiploma"
+                    control={<Radio />}
+                  />
+                  <FormControlLabel
+                    label="Bachelors Degree"
+                    value="bachelorsDegree"
+                    control={<Radio />}
+                  />
+                </RadioGroup>
+              )}
+            />
+          </FormControl>
+          {educationLevel === 'higherSchoolDiploma' && (
+            <TextField
+              {...register('schoolName')}
+              label="School Name"
+              helperText={fullErrors.schoolName?.message}
+              error={!!fullErrors.schoolName}
+            />
+          )}
+          {educationLevel === 'bachelorsDegree' && (
+            <TextField
+              {...register('universityName')}
+              label="University Name"
+              helperText={fullErrors.universityName?.message}
+              error={!!fullErrors.universityName}
+            />
           )}
           <Button
             variant="contained"

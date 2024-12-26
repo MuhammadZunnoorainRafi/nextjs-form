@@ -9,12 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@hookform/resolvers": "^3.9.0",
-    "@mui/icons-material": "^6.1.7",
-    "@mui/material": "^6.1.7",
+    "@mui/icons-material": "^6.3.0",
+    "@mui/material": "^6.3.0",
+    "@mui/x-date-pickers": "^7.23.3",
+    "@mui/x-date-pickers-pro": "^7.23.3",
+    "@tanstack/react-query": "^5.62.10",
+    "axios": "^1.7.9",
+    "date-fns": "^4.1.0",
     "framer-motion": "^11.11.11",
+    "lodash": "^4.17.21",
     "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
@@ -22,6 +28,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

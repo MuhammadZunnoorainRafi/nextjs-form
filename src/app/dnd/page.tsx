@@ -3,10 +3,36 @@ import { dndData } from '@/lib/constants';
 import { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 
+function reorder<T>(list: T[], startIndex: number, endIndex: number) {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+}
+
 function DndPage() {
   const [pageData, setPageData] = useState(dndData);
+  const handleDragEnd = (res: any) => {
+    const { destination, source, type } = res;
+    if (!destination) {
+      return;
+    }
+
+    if (
+      source.droppableId === destination.draggableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+
+    if (type === 'list') {
+      const result = reorder(pageData, source.index, destination.index);
+      setPageData(result);
+    }
+  };
+
   return (
-    <DragDropContext onDragEnd={() => console.log('Dragged')}>
+    <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="lists" type="list" direction="horizontal">
         {(provider) => (
           <div
@@ -22,7 +48,7 @@ function DndPage() {
                       {...provider.draggableProps}
                       {...provider.dragHandleProps}
                       ref={provider.innerRef}
-                      className="border border-slate-400 rounded-md p-2"
+                      className="border border-slate-400 rounded-md p-2 bg-slate-900"
                     >
                       {data.name}
                     </div>
@@ -30,6 +56,7 @@ function DndPage() {
                 </Draggable>
               );
             })}
+            {provider.placeholder}
           </div>
         )}
       </Droppable>

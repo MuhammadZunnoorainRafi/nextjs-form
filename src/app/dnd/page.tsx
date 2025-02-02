@@ -38,7 +38,7 @@ function DndPage() {
           <div
             {...provider.droppableProps}
             ref={provider.innerRef}
-            className="grid grid-cols-3 max-w-3xl gap-3 mx-auto p-5 border-2 border-slate-200 rounded-md"
+            className="grid grid-cols-3 max-w-3xl gap-x-3 mx-auto p-5 border-2 border-slate-200 rounded-md"
           >
             {pageData.map((data, ind) => {
               return (

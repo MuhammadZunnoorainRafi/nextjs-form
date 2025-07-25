@@ -26,7 +26,7 @@ export const dndData: DndItems[] = [
     items: [
       {
         id: '95ee6a5d-f927-4579-8c15-2b4eb86210ae',
-        name: 'Designing Data Intensive Applications',
+        name: 'Designing Data',
       },
       { id: '5bee94eb-6bde-4411-b438-1c37fa6af364', name: 'Atomic Habits' },
     ],

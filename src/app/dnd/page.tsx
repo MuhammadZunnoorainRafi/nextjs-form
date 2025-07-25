@@ -38,7 +38,7 @@ function DndPage() {
           <div
             {...provider.droppableProps}
             ref={provider.innerRef}
-            className="grid grid-cols-3 max-w-3xl gap-x-3 mx-auto p-5 border-2 border-slate-200 rounded-md"
+            className="grid grid-cols-3 max-w-3xl mx-auto p-5 border-2 border-slate-200 rounded-md"
           >
             {pageData.map((data, ind) => {
               return (
@@ -48,9 +48,13 @@ function DndPage() {
                       {...provider.draggableProps}
                       {...provider.dragHandleProps}
                       ref={provider.innerRef}
-                      className="border border-slate-400 rounded-md p-2 bg-slate-900"
+                      className="p-1 m-1 bg-slate-800 rounded-md"
                     >
-                      {data.name}
+                      <ListItem
+                        name={data.name}
+                        items={data.items}
+                        id={data.id}
+                      />
                     </div>
                   )}
                 </Draggable>
@@ -65,3 +69,46 @@ function DndPage() {
 }
 
 export default DndPage;
+
+function ListItem({
+  name,
+  items,
+  id,
+}: {
+  name: string;
+  items: { id: string; name: string }[];
+  id: string;
+}) {
+  return (
+    <Droppable droppableId={id}>
+      {(provider) => (
+        <div {...provider.droppableProps} ref={provider.innerRef}>
+          <h1
+            className={`border border-slate-400  rounded-md p-2 bg-slate-900`}
+          >
+            {name}
+          </h1>
+          <div className="p-1">
+            {items.map((val, ind) => (
+              <Draggable key={val.id} draggableId={val.id} index={ind}>
+                {(provider) => (
+                  <div
+                    key={val.id}
+                    ref={provider.innerRef}
+                    {...provider.dragHandleProps}
+                    {...provider.draggableProps}
+                  >
+                    <p className="bg-cyan-600 p-1 border border-cyan-300">
+                      {val.name}
+                    </p>
+                  </div>
+                )}
+              </Draggable>
+            ))}
+          </div>
+          {provider.placeholder}
+        </div>
+      )}
+    </Droppable>
+  );
+}
